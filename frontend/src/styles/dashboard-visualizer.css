@@ -1,0 +1,204 @@
+/* Payment Gap Visualizer */
+
+.visualizer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.visualizer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.visualizer-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.visualizer-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.visualizer-legend {
+  display: flex;
+  gap: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-dot.teal {
+  background: var(--teal);
+}
+
+.legend-dot.red {
+  background: var(--danger);
+}
+
+/* Visualizer Body */
+
+.visualizer-body {
+  position: relative;
+  padding-bottom: 28px;
+}
+
+.axis-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  padding: 0 2px;
+}
+
+/* Gap Zone Overlay */
+
+.gap-zone {
+  position: absolute;
+  top: 0;
+  bottom: 28px;
+  background: rgba(224, 80, 64, 0.06);
+  border-left: 1px dashed var(--amber);
+  border-right: 1px dashed var(--danger);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gap-label {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--danger);
+  white-space: nowrap;
+  background: rgba(224, 80, 64, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Day 30 Vertical Line */
+
+.day-line {
+  position: absolute;
+  top: 0;
+  bottom: 28px;
+  width: 1px;
+  border-left: 1px dashed var(--amber);
+  z-index: 2;
+}
+
+.day-line-label {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: var(--amber);
+  white-space: nowrap;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Bar Sections */
+
+.bars-section {
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.bars-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.bar-name {
+  font-size: 12px;
+  color: var(--text);
+  width: 140px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  flex: 1;
+  height: 22px;
+  background: var(--surface2);
+  border-radius: 4px;
+  position: relative;
+  overflow: visible;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  transition: width 0.4s ease;
+}
+
+.teal-bar {
+  background: rgba(0, 212, 168, 0.25);
+  border: 1px solid rgba(0, 212, 168, 0.4);
+}
+
+.red-bar {
+  background: rgba(224, 80, 64, 0.25);
+  border: 1px solid rgba(224, 80, 64, 0.4);
+}
+
+.bar-label {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.bar-amount {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  width: 50px;
+  text-align: right;
+  flex-shrink: 0;
+}
