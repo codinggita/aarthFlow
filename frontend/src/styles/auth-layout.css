@@ -1,0 +1,125 @@
+.auth-root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg);
+}
+
+.auth-left {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+}
+
+.auth-left-inner {
+  max-width: 420px;
+  width: 100%;
+}
+
+.auth-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--teal);
+  margin-bottom: 40px;
+  letter-spacing: -0.5px;
+}
+
+.auth-headline {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.auth-desc {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+.auth-stats {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.auth-stat-val {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+
+.auth-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.auth-card-preview {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.preview-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.preview-amount {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--danger);
+  margin-bottom: 6px;
+}
+
+.preview-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.preview-bar {
+  background: var(--surface2);
+  border-radius: 4px;
+  height: 5px;
+  overflow: hidden;
+}
+
+.preview-fill {
+  width: 72%;
+  height: 100%;
+  background: var(--danger);
+  border-radius: 4px;
+}
+
+.auth-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+}
+
+.auth-form-box {
+  width: 100%;
+  max-width: 400px;
+}
