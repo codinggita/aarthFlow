@@ -1,4 +1,11 @@
 import { useState } from "react";
+import "../styles/tokens.css";
+import "../styles/buttons.css";
+import "../styles/navbar.css";
+import "../styles/hero.css";
+import "../styles/sections.css";
+import "../styles/footer.css";
+import "../styles/responsive.css";
 
 const NAV_LINKS = ["Features", "Solutions", "How It Works", "Pricing"];
 
