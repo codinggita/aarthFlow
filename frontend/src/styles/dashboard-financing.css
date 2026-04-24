@@ -1,0 +1,134 @@
+/* Financing Options */
+
+.financing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.financing-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  border-left: 3px solid var(--border);
+  transition: border-color 0.2s, background 0.15s;
+}
+
+.financing-item:hover {
+  background: rgba(19, 29, 53, 0.8);
+}
+
+/* Left border color variants */
+
+.financing-item.teal-border {
+  border-left-color: var(--teal);
+}
+
+.financing-item.blue-border {
+  border-left-color: var(--blue);
+}
+
+.financing-item.amber-border {
+  border-left-color: var(--amber);
+}
+
+/* Item Header */
+
+.financing-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.financing-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Badge */
+
+.fin-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+}
+
+.fin-badge.teal {
+  background: rgba(0, 212, 168, 0.1);
+  color: var(--teal);
+  border: 1px solid rgba(0, 212, 168, 0.25);
+}
+
+.fin-badge.blue {
+  background: rgba(74, 128, 240, 0.1);
+  color: var(--blue);
+  border: 1px solid rgba(74, 128, 240, 0.25);
+}
+
+.fin-badge.amber {
+  background: rgba(240, 160, 32, 0.1);
+  color: var(--amber);
+  border: 1px solid rgba(240, 160, 32, 0.25);
+}
+
+/* Rate Display */
+
+.financing-rate {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.financing-rate span {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* Meta Row */
+
+.financing-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  gap: 8px;
+}
+
+.financing-meta strong {
+  color: var(--text);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* Apply Button */
+
+.apply-btn {
+  width: 100%;
+  background: transparent;
+  color: var(--teal);
+  border: 1px solid rgba(0, 212, 168, 0.3);
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.apply-btn:hover {
+  background: var(--teal-dim);
+  border-color: var(--teal);
+}

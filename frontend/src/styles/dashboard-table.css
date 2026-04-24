@@ -1,0 +1,107 @@
+/* Buyer Payment Behavior Table */
+
+.buyer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.buyer-table th {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.buyer-table td {
+  font-size: 13px;
+  color: var(--text);
+  padding: 14px 14px;
+  border-bottom: 1px solid var(--border);
+  transition: border-left 0.15s;
+}
+
+.buyer-table tr:last-child td {
+  border-bottom: none;
+}
+
+.buyer-table tbody tr {
+  transition: background 0.15s;
+}
+
+.buyer-table tbody tr:hover {
+  background: var(--surface2);
+}
+
+.buyer-table tbody tr:hover td:first-child {
+  border-left: 2px solid var(--teal);
+}
+
+/* Mono-spaced financial values */
+
+.buyer-table .mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.buyer-table .danger-text {
+  color: var(--danger);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Risk Pill */
+
+.risk-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.risk-pill.high {
+  background: rgba(224, 80, 64, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(224, 80, 64, 0.25);
+}
+
+.risk-pill.medium {
+  background: rgba(240, 160, 32, 0.12);
+  color: var(--amber);
+  border: 1px solid rgba(240, 160, 32, 0.25);
+}
+
+.risk-pill.low {
+  background: rgba(0, 212, 168, 0.1);
+  color: var(--teal);
+  border: 1px solid rgba(0, 212, 168, 0.25);
+}
+
+/* Finance Button */
+
+.finance-btn {
+  background: transparent;
+  color: var(--teal);
+  border: 1px solid rgba(0, 212, 168, 0.3);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.finance-btn:hover {
+  background: var(--teal-dim);
+  border-color: var(--teal);
+}
