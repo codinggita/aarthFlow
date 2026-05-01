@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/tokens.css";
 import "../styles/buttons.css";
 import "../styles/navbar.css";
@@ -82,8 +83,8 @@ export default function Landing() {
             ))}
           </ul>
           <div className="nav-actions">
-            <a href="#" className="btn-ghost">Log In</a>
-            <a href="#" className="btn-primary">Get Started</a>
+            <Link to="/login" className="btn-ghost">Log In</Link>
+            <Link to="/signup" className="btn-primary">Get Started</Link>
           </div>
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
             <span /><span /><span />
@@ -105,8 +106,8 @@ export default function Landing() {
               AarthFlow converts your confirmed invoices into working capital — instantly.
             </p>
             <div className="hero-cta">
-              <a href="#" className="btn-primary large">Get Started Free</a>
-              <a href="#" className="btn-outline large">See How It Works</a>
+              <Link to="/signup" className="btn-primary large">Get Started Free</Link>
+              <a href="#how-it-works" className="btn-outline large">See How It Works</a>
             </div>
           </div>
           <div className="hero-right">
@@ -125,7 +126,7 @@ export default function Landing() {
                 <span>Obligations due in 30 days</span>
                 <span className="danger-text">₹43.2L</span>
               </div>
-              <a href="#" className="btn-primary block-btn">Bridge the Gap</a>
+              <Link to="/signup" className="btn-primary block-btn">Bridge the Gap</Link>
             </div>
           </div>
         </div>
@@ -205,8 +206,8 @@ export default function Landing() {
           <h2>Ready to unlock your cash?</h2>
           <p>Join thousands of Indian SMEs who no longer wait 90 days to get paid.</p>
           <div className="hero-cta">
-            <a href="#" className="btn-primary large">Apply Now</a>
-            <a href="#" className="btn-outline-light large">View Prototype</a>
+            <Link to="/signup" className="btn-primary large">Apply Now</Link>
+            <Link to="/login" className="btn-outline-light large">View Prototype</Link>
           </div>
         </div>
       </section>

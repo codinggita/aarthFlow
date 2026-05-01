@@ -1,12 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
 import SignupStep2 from "./pages/SignupStep2";
 import SignupStep3 from "./pages/SignupStep3";
 import InvoiceUpload from "./pages/InvoiceUpload";
 import InvoiceList from "./pages/InvoiceList";
 import InvoiceDetail from "./pages/InvoiceDetail";
+import Landing from "./pages/Landing";
 
 
 
@@ -31,11 +33,11 @@ const App = () => {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <div>Dashboard coming in PR 18</div>
+            <Dashboard />
           </ProtectedRoute>
         }
       />
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Landing />} />
     </Routes>
   );
 };
