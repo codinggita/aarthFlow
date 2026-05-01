@@ -22,6 +22,10 @@ const invoiceRoutes = require("./routes/invoiceRoutes");
 app.use("/api/invoices", invoiceRoutes);
 const dashboardRoutes = require("./routes/dashboardRoutes");
 app.use("/api/dashboard", dashboardRoutes);
+const buyerRoutes = require("./routes/buyerRoutes");
+app.use("/api/buyers", buyerRoutes);
+const payoutRoutes = require("./routes/payoutRoutes");
+app.use("/api/payouts", payoutRoutes);
 
 // Base route
 app.get("/", (req, res) => {
