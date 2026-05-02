@@ -1,212 +1,84 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { SignupStep1 } from "../components/auth/SignupStep1";
+import { SignupStep2, SignupStep3 } from "../components/auth/SignupSteps";
+import "../styles/Login.css"; 
 import "../styles/Signup.css";
 
 const Signup = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
-
+  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [gstVerified, setGstVerified] = useState(false);
   const [gstLoading, setGstLoading] = useState(false);
+  const [formData, setFormData] = useState({ businessName: "", gstNumber: "", ownerName: "", mobile: "", email: "", password: "", businessType: "Manufacturer", avgMonthlyRevenue: "", topBuyers: "", accountNumber: "", ifscCode: "" });
 
-  const [formData, setFormData] = useState({
-    businessName: "",
-    gstNumber: "",
-    ownerName: "",
-    mobile: "",
-    email: "",
-    password: "",
-    businessType: "Manufacturer",
-  });
+  const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); setFormError(""); };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setFormError("");
+  const handleVerifyGST = (e) => {
+    e.preventDefault();
+    if (!formData.gstNumber || formData.gstNumber.length < 15) return setFormError("Enter valid 15-char GST");
+    setGstLoading(true);
+    setTimeout(() => { setGstVerified(true); setGstLoading(false); setFormError(""); }, 1000);
   };
 
-  // Simulate GST verification
-  const handleVerifyGST = async () => {
-    if (!formData.gstNumber || formData.gstNumber.length < 15) {
-      return setFormError("Enter a valid 15-character GST number");
+  const nextStep = () => {
+    if (step === 1) {
+      if (!formData.businessName || !formData.gstNumber || !formData.ownerName) return setFormError("Fill all required business details");
+      if (!gstVerified) return setFormError("Verify GST number first");
     }
-    setGstLoading(true);
-    setTimeout(() => {
-      setGstVerified(true);
-      setGstLoading(false);
-    }, 1500);
+    setFormError(""); setStep(step + 1);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormError("");
-
-    const { businessName, gstNumber, ownerName, mobile, email, password } =
-      formData;
-
-    if (!businessName || !gstNumber || !ownerName || !mobile || !email || !password) {
-      return setFormError("All fields are required");
-    }
-
-    if (mobile.length !== 10) {
-      return setFormError("Enter a valid 10-digit mobile number");
-    }
-
-    if (password.length < 6) {
-      return setFormError("Password must be at least 6 characters");
-    }
-
-    setLoading(true);
-    const result = await register(formData);
-    setLoading(false);
-
-    if (result.success) {
-      navigate("/dashboard");
-    } else {
-      setFormError(result.message);
-    }
+    e.preventDefault(); setLoading(true);
+    const result = await register(formData); setLoading(false);
+    if (result.success) navigate("/dashboard"); else setFormError(result.message);
   };
 
+  const sidebarConfig = [
+    { title: "Start your liquidity journey.", sub: "Get your first invoice funded in under 24 hours.", step: 1, label: "Business Info", desc: "Register your company" },
+    { title: "Configure your financing.", sub: "Tell us about your revenue and top buyers.", step: 2, label: "Invoice Setup", desc: "Connect your buyers" },
+    { title: "Finalize your account.", sub: "Connect your business bank account.", step: 3, label: "Bank Details", desc: "Verify your payout account" }
+  ];
+
   return (
-    <div className="signup-page">
-      {/* Left Panel */}
-      <div className="signup-left">
-        <div className="signup-logo">AarthFlow</div>
-        <div className="signup-illustration">
-          <div className="flow-node">📄 Invoice Uploaded</div>
-          <div className="flow-line">↓</div>
-          <div className="flow-node">✅ Buyer Confirmed</div>
-          <div className="flow-line">↓</div>
-          <div className="flow-node active">₹ Funds Released</div>
+    <div className="auth-container">
+      <div className="auth-side-panel">
+        <Link to="/" className="auth-logo">AarthFlow</Link>
+        <div className="auth-visual">
+          <div className="glow-sphere"></div>
+          <div className="auth-content-wrap">
+            <h1>{sidebarConfig[step-1].title}</h1>
+            <p>{sidebarConfig[step-1].sub}</p>
+          </div>
+          <div className="signup-steps-v">
+            {sidebarConfig.map(s => (
+              <div key={s.step} className={`step-v ${step >= s.step ? 'active' : ''}`}>
+                <span className="dot"></span>
+                <div className="step-v-text"><strong>{s.label}</strong><p>{s.desc}</p></div>
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="signup-tagline">
-          Get your first invoice funded in under 24 hours
-        </p>
       </div>
 
-      {/* Right Panel */}
-      <div className="signup-right">
-        {/* Step Indicator */}
-        <div className="step-indicator">
-          <div className="step active">
-            <span className="step-circle">1</span>
-            <span className="step-label">Business Info</span>
-          </div>
-          <div className="step-line"></div>
-          <div className="step">
-            <span className="step-circle">2</span>
-            <span className="step-label">Invoice Setup</span>
-          </div>
-          <div className="step-line"></div>
-          <div className="step">
-            <span className="step-circle">3</span>
-            <span className="step-label">Bank Details</span>
-          </div>
+      <div className="auth-form-panel">
+        <div className="auth-form-card signup-card">
+          <header className="auth-header">
+            <div className="step-tag">STEP {step} OF 3</div>
+            <h2>{step === 1 ? "Create account" : step === 2 ? "Invoice Setup" : "Bank Verification"}</h2>
+            <p>{step === 1 ? "Tell us about your business" : step === 2 ? "Estimate liquidity needs" : "Where to send funds?"}</p>
+          </header>
+          {formError && <div className="auth-alert error">{formError}</div>}
+          {step === 1 && <SignupStep1 formData={formData} handleChange={handleChange} handleVerifyGST={handleVerifyGST} gstVerified={gstVerified} gstLoading={gstLoading} nextStep={nextStep} />}
+          {step === 2 && <SignupStep2 formData={formData} handleChange={handleChange} setStep={setStep} nextStep={nextStep} />}
+          {step === 3 && <SignupStep3 formData={formData} handleChange={handleChange} setStep={setStep} handleSubmit={handleSubmit} loading={loading} />}
+          <footer className="auth-footer"><p>Already have an account? <Link to="/login" className="text-link">Login</Link></p></footer>
         </div>
-
-        <h2 className="signup-title">Tell us about your business</h2>
-        <p className="signup-subtitle">Step 1 of 3 — takes 2 minutes</p>
-
-        {formError && <p className="form-error">{formError}</p>}
-
-        <form onSubmit={handleSubmit} className="signup-form">
-          <input
-            type="text"
-            name="businessName"
-            placeholder="Business Name"
-            value={formData.businessName}
-            onChange={handleChange}
-          />
-
-          {/* GST Field with Verify Button */}
-          <div className="gst-row">
-            <input
-              type="text"
-              name="gstNumber"
-              placeholder="GST Number (15 characters)"
-              maxLength={15}
-              value={formData.gstNumber}
-              onChange={(e) => {
-                handleChange(e);
-                setGstVerified(false);
-              }}
-            />
-            {!gstVerified ? (
-              <button
-                type="button"
-                className="btn-verify"
-                onClick={handleVerifyGST}
-                disabled={gstLoading}
-              >
-                {gstLoading ? "Verifying..." : "Verify GST"}
-              </button>
-            ) : (
-              <span className="gst-verified">✓ Verified</span>
-            )}
-          </div>
-
-          <div className="form-row">
-            <input
-              type="text"
-              name="ownerName"
-              placeholder="Owner Full Name"
-              value={formData.ownerName}
-              onChange={handleChange}
-            />
-            <input
-              type="tel"
-              name="mobile"
-              placeholder="Mobile Number"
-              maxLength={10}
-              value={formData.mobile}
-              onChange={handleChange}
-            />
-          </div>
-
-          <input
-            type="email"
-            name="email"
-            placeholder="Business Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Create Password (min 6 characters)"
-            value={formData.password}
-            onChange={handleChange}
-          />
-
-          <select
-            name="businessType"
-            value={formData.businessType}
-            onChange={handleChange}
-          >
-            <option value="Manufacturer">Manufacturer</option>
-            <option value="Trader">Trader</option>
-            <option value="Service Provider">Service Provider</option>
-            <option value="Contractor">Contractor</option>
-          </select>
-
-          <button
-            type="submit"
-            className="btn-primary"
-            disabled={loading}
-          >
-            {loading ? "Creating account..." : "Continue →"}
-          </button>
-        </form>
-
-        <p className="signup-footer">
-          Already registered?{" "}
-          <span onClick={() => navigate("/login")} className="link">
-            Login
-          </span>
-        </p>
       </div>
     </div>
   );

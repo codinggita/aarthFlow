@@ -1,0 +1,30 @@
+/* Stripe-style Bento Grid Base */
+.bento-section {
+  padding: 120px 0;
+  background: #f6f9fc;
+  color: #1e293b;
+}
+
+.bento-header-stripe { max-width: 700px; margin-bottom: 60px; }
+.bento-header-stripe h2 { font-size: 42px; line-height: 1.1; margin-bottom: 20px; color: #0a2540; }
+.bento-header-stripe p { font-size: 19px; color: #425466; line-height: 1.6; }
+
+.bento-grid-stripe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.bento-card-stripe {
+  background: white;
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(50,50,93,0.1), 0 5px 15px rgba(0,0,0,0.07);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card-stripe:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -12px rgba(50,50,93,0.25), 0 18px 36px -18px rgba(0,0,0,0.3);
+}
+
+.card-span-2 { grid-column: span 2; }
+.card-tag-stripe { font-size: 12px; font-weight: 700; color: #635bff; margin-bottom: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.bento-card-stripe h3 { font-size: 24px; margin-bottom: 24px; color: #0a2540; }

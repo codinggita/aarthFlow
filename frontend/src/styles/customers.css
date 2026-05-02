@@ -1,0 +1,127 @@
+.customer-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.c-kpi-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.c-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.c-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.c-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.c-delta { font-size: 13px; color: #166534; font-weight: 700; }
+.c-sub-val { font-size: 13px; color: #94a3b8; font-weight: 600; }
+
+.c-progress-bar { height: 4px; background: #f1f5f9; border-radius: 10px; margin-top: 16px; }
+.c-fill { height: 100%; background: var(--primary); border-radius: 10px; }
+
+.c-danger-icon { position: absolute; right: 24px; bottom: 24px; font-size: 24px; }
+
+/* Filter Bar */
+.filter-bar-v2 {
+  background: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.search-box { display: flex; align-items: center; gap: 10px; flex: 1; }
+.search-box input { border: none; outline: none; font-size: 14px; width: 100%; }
+
+.filter-select { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 13px; font-weight: 600; }
+
+.toggle-group { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #64748b; }
+.toggle-switch { width: 36px; height: 18px; background: #e2e8f0; border-radius: 100px; }
+
+/* Main Table */
+.customers-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+}
+
+.c-primary-col { background: white; border-radius: 20px; border: 1px solid #e2e8f0; padding: 24px; }
+
+.customers-table { width: 100%; border-collapse: collapse; }
+.customers-table th { text-align: left; padding: 16px 20px; font-size: 10px; font-weight: 800; color: #94a3b8; border-bottom: 1px solid #f1f5f9; }
+.customers-table td { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; font-size: 14px; cursor: pointer; }
+.customers-table tr.active { background: #f0fdfa; }
+
+.c-name-cell { display: flex; align-items: center; gap: 12px; }
+.c-avatar { width: 32px; height: 32px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #64748b; }
+
+.risk-pill { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 100px; }
+.risk-pill.ap { background: #dcfce7; color: #166534; }
+.risk-pill.a { background: #dcfce7; color: #166534; }
+.risk-pill.am { background: #f0fdf4; color: #15803d; }
+.risk-pill.bp { background: #fef3c7; color: #9a3412; }
+.risk-pill.b { background: #fef3c7; color: #9a3412; }
+
+/* Side Panel */
+.risk-side-panel { background: #040810; color: white; border-radius: 24px; padding: 32px; position: sticky; top: 100px; }
+.risk-panel-header { text-align: center; position: relative; margin-bottom: 32px; }
+.risk-avatar-large { width: 64px; height: 64px; background: rgba(255, 255, 255, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 16px; }
+.risk-score-badge { position: absolute; top: 0; right: 0; background: var(--primary); color: #040810; font-size: 8px; font-weight: 800; padding: 4px 8px; border-radius: 100px; }
+.risk-panel-header h3 { font-size: 20px; margin-bottom: 8px; }
+.risk-panel-header p { font-size: 13px; opacity: 0.5; }
+
+.risk-stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.risk-stat-box { background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 12px; }
+.risk-stat-box span { font-size: 10px; opacity: 0.4; display: block; margin-bottom: 4px; }
+.risk-stat-box strong { font-size: 16px; }
+
+.payment-cycle-card { background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 12px; margin-bottom: 32px; text-align: center; }
+.payment-cycle-card span { font-size: 11px; opacity: 0.4; display: block; margin-bottom: 4px; }
+.payment-cycle-card strong { font-size: 24px; color: var(--primary); }
+
+.risk-breakdown h4 { font-size: 12px; opacity: 0.5; margin-bottom: 20px; letter-spacing: 1px; }
+.risk-line { margin-bottom: 20px; }
+.risk-line-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.risk-line-bar { height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 100px; }
+.risk-line-bar .fill { height: 100%; background: var(--primary); border-radius: 100px; box-shadow: 0 0 10px var(--primary); }
+
+.market-pos-card { background: rgba(255, 255, 255, 0.03); padding: 24px; border-radius: 20px; text-align: center; }
+.market-pos-card h4 { font-size: 12px; opacity: 0.5; margin-bottom: 24px; }
+.circular-chart-v2 { width: 120px; height: 120px; border: 8px solid rgba(0, 212, 168, 0.1); border-top-color: var(--primary); border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.circular-chart-v2 strong { font-size: 24px; }
+.circular-chart-v2 span { font-size: 9px; opacity: 0.5; }
+
+.chart-legend-v2 { display: flex; justify-content: center; gap: 16px; font-size: 11px; }
+.chart-legend-v2 .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.dot.tech { background: var(--primary); }
+.dot.retail { background: #3b82f6; }
+.dot.other { background: #94a3b8; }
+
+.btn-full-profile { width: 100%; padding: 16px; background: white; color: #040810; border: none; border-radius: 100px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 32px; transition: all 0.2s; }
+.btn-full-profile:hover { background: #f1f5f9; }
+
+.btn-new-facility { width: calc(100% - 24px); margin: 0 12px 24px; padding: 14px; background: var(--primary); color: #040810; border: none; border-radius: 100px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }

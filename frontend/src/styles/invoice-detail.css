@@ -1,0 +1,102 @@
+.breadcrumb-v2 { font-size: 13px; color: #94a3b8; margin-bottom: 24px; }
+.breadcrumb-v2 a { text-decoration: none; color: #64748b; }
+.breadcrumb-v2 strong { color: #0f172a; }
+
+.invoice-header-v2 { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+.h-left { display: flex; gap: 24px; }
+.inv-icon-large { width: 56px; height: 56px; background: #f8fafc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 1px solid #e2e8f0; }
+
+.inv-tags { display: flex; align-items: center; gap: 12px; margin: 12px 0 8px; }
+.tag-status { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; }
+.tag-status.pending { background: #eff6ff; color: #1d4ed8; }
+.tag-label { font-size: 11px; color: #94a3b8; font-weight: 600; }
+.inv-amount-v2 { font-size: 32px; font-weight: 800; color: #0f172a; }
+
+/* Tracker */
+.invoice-tracker-v2 { display: flex; align-items: center; justify-content: space-between; background: white; padding: 40px; border-radius: 20px; border: 1px solid #e2e8f0; margin-bottom: 32px; }
+.track-step { display: flex; flex-direction: column; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #94a3b8; flex: 1; }
+.step-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 16px; background: white; }
+
+.track-step.completed { color: #0f172a; }
+.track-step.completed .step-circle { background: #00d4a8; border-color: #00d4a8; color: #040810; }
+.track-step.active { color: #0f172a; }
+.track-step.active .step-circle { border-color: #00d4a8; position: relative; }
+.step-circle.ripple::after { content: ''; position: absolute; inset: -4px; border: 2px solid #00d4a8; border-radius: 50%; animation: ripple 1.5s infinite; }
+
+@keyframes ripple { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+.track-line { flex: 1; height: 3px; background: #e2e8f0; margin: 0 -30px; }
+.track-line.completed { background: #00d4a8; }
+.track-line.active { background: linear-gradient(to right, #00d4a8, #e2e8f0); }
+
+/* Detail Grid */
+.invoice-detail-grid { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
+.detail-card { background: white; padding: 32px; border-radius: 20px; border: 1px solid #e2e8f0; margin-bottom: 24px; }
+.card-head-v2 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.card-head-v2 h3 { font-size: 18px; font-weight: 800; }
+
+.info-grid-v2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.info-item span { display: block; font-size: 11px; font-weight: 800; color: #94a3b8; letter-spacing: 1px; margin-bottom: 8px; }
+.info-item strong { font-size: 14px; }
+.info-sep { grid-column: span 2; border-top: 1px solid #f1f5f9; margin: 8px 0; }
+.text-primary { color: #1d4ed8; }
+.text-success { color: #166534; }
+
+/* Activity Log */
+.activity-list-v2 { display: flex; flex-direction: column; gap: 32px; position: relative; padding-left: 24px; }
+.activity-list-v2::before { content: ''; position: absolute; left: 4px; top: 0; bottom: 0; width: 2px; background: #f1f5f9; }
+.activity-item-v2 { position: relative; }
+.a-dot { position: absolute; left: -24px; top: 4px; width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%; border: 2px solid white; z-index: 2; }
+.a-dot.active { background: #00d4a8; box-shadow: 0 0 10px rgba(0, 212, 168, 0.5); }
+.a-content strong { display: block; font-size: 14px; margin-bottom: 4px; }
+.a-content p { font-size: 13px; color: #64748b; margin-bottom: 8px; line-height: 1.4; }
+.a-content span { font-size: 10px; font-weight: 800; color: #94a3b8; letter-spacing: 0.5px; }
+
+/* Sidebar */
+.payout-breakdown-card { background: white; padding: 32px; border-radius: 24px; border: 1px solid #e2e8f0; margin-bottom: 24px; }
+.payout-breakdown-card h3 { font-size: 12px; font-weight: 800; color: #94a3b8; margin-bottom: 24px; letter-spacing: 1px; }
+
+.p-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 16px; }
+.p-row span { color: #64748b; }
+.text-danger { color: #991b1b; }
+
+.p-total { border-top: 1px solid #f1f5f9; padding-top: 24px; margin: 24px 0 32px; text-align: center; }
+.p-total span { font-size: 10px; font-weight: 800; color: var(--primary); display: block; margin-bottom: 8px; }
+.p-total h2 { font-size: 32px; font-weight: 800; color: #166534; }
+
+.p-est { display: flex; align-items: center; gap: 12px; background: #f0fdf4; padding: 16px; border-radius: 12px; margin-bottom: 24px; }
+.est-icon { font-size: 20px; }
+.p-est span { font-size: 10px; font-weight: 800; color: #166534; display: block; }
+.p-est strong { font-size: 14px; color: #166534; }
+
+.btn-payout-action { width: 100%; padding: 16px; background: #00d4a8; color: #040810; border: none; border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; margin-bottom: 16px; }
+.btn-cancel-link { background: transparent; border: none; width: 100%; color: #991b1b; font-weight: 700; font-size: 13px; cursor: pointer; }
+
+/* Risk Card */
+.risk-card-mini { background: #040810; color: white; padding: 24px; border-radius: 20px; margin-bottom: 24px; }
+.risk-head-v2 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.risk-head-v2 span { font-size: 9px; font-weight: 800; opacity: 0.5; letter-spacing: 1px; }
+.risk-head-v2 h4 { font-size: 16px; margin-top: 4px; }
+.risk-badge-large { width: 44px; height: 44px; background: var(--primary); color: #040810; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; }
+
+.risk-meter-v2 { margin-bottom: 24px; }
+.meter-head { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
+.meter-bar { height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+.meter-bar .fill { height: 100%; background: var(--primary); border-radius: 100px; box-shadow: 0 0 10px var(--primary); }
+
+.risk-metrics-v2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rm-box { background: rgba(255, 255, 255, 0.03); padding: 12px; border-radius: 8px; }
+.rm-box span { font-size: 8px; opacity: 0.4; display: block; margin-bottom: 4px; }
+.rm-box strong { font-size: 13px; }
+
+/* Attachments */
+.attachments-card { background: white; padding: 24px; border-radius: 20px; border: 1px solid #e2e8f0; }
+.att-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.att-head h3 { font-size: 14px; font-weight: 800; }
+.btn-link-sm { background: transparent; border: none; color: var(--primary); font-weight: 800; font-size: 12px; cursor: pointer; }
+
+.att-list { display: flex; flex-direction: column; gap: 12px; }
+.att-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #f1f5f9; border-radius: 8px; }
+.att-icon { width: 32px; height: 32px; background: #fef2f2; color: #991b1b; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; }
+.att-info strong { display: block; font-size: 12px; }
+.att-info span { font-size: 10px; color: #94a3b8; }

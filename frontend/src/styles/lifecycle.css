@@ -1,0 +1,68 @@
+/* Lifecycle Section */
+.lifecycle-section {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.section-header-row h3 { font-size: 24px; font-weight: 800; }
+.btn-ghost { background: transparent; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 13px; margin-right: 12px; cursor: pointer; }
+.btn-dark { background: #040810; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
+
+.lifecycle-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  z-index: 2;
+  flex: 1;
+}
+
+.node-icon {
+  width: 40px;
+  height: 40px;
+  background: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #94a3b8;
+  border: 2px solid #e2e8f0;
+}
+
+.step-node.active .node-icon {
+  background: var(--primary);
+  color: #040810;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(0, 212, 168, 0.4);
+}
+
+.node-info strong { display: block; font-size: 14px; color: #0f172a; }
+.node-info span { font-size: 11px; color: #94a3b8; }
+.status-badge { background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin-top: -45px;
+}
+
+.step-line.active { background: var(--primary); }

@@ -1,0 +1,29 @@
+/* Logo Wall */
+.logo-wall-stripe {
+  padding: 40px 0;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  overflow: hidden;
+}
+
+.logo-wall-grid {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.logo-wall-item {
+  color: #64748b;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

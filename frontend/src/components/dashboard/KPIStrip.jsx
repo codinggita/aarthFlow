@@ -1,4 +1,6 @@
-const KPI_DATA = [
+import "../../styles/dashboard-kpi.css";
+
+const DEFAULT_KPI_DATA = [
   {
     label: "Cash Gap Exposure",
     value: "43.2L",
@@ -25,10 +27,10 @@ const KPI_DATA = [
   },
 ];
 
-export default function KPIStrip() {
+export default function KPIStrip({ data = DEFAULT_KPI_DATA }) {
   return (
     <div className="kpi-strip">
-      {KPI_DATA.map((kpi) => (
+      {data.map((kpi) => (
         <div key={kpi.label} className={`kpi-card ${kpi.type}`}>
           <div className="kpi-label">{kpi.label}</div>
           <div className={`kpi-value ${kpi.type}`}>{kpi.value}</div>

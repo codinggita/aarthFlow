@@ -1,0 +1,6 @@
+/* Master Payout Styles */
+@import "./payout-core.css";
+@import "./payout-form-styles.css";
+@import "./payout-summary-styles.css";
+@import "./payout-success-styles.css";
+@import "./payout-list-styles.css";

@@ -1,0 +1,14 @@
+/* Payout Summary Styles */
+.summary-invoice { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.summary-inv-num { font-family: var(--font-mono); font-weight: 600; color: var(--teal); }
+.summary-buyer { font-size: 14px; color: var(--muted); }
+
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; }
+.summary-row.fee { color: var(--danger); }
+.summary-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.summary-row.net { font-size: 18px; font-weight: 700; color: var(--text); }
+
+.arrival-box { background: var(--teal-dim); border: 1px solid var(--teal-dim); border-radius: 12px; padding: 16px; display: flex; gap: 16px; margin-top: 24px; }
+.arrival-icon { font-size: 20px; }
+.arrival-title { font-size: 12px; font-weight: 600; color: var(--teal); margin-bottom: 2px; }
+.arrival-time { font-size: 14px; color: var(--text); }

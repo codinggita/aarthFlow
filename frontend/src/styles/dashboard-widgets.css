@@ -1,0 +1,114 @@
+/* Widgets */
+.widgets-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.widget-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.portfolio-health {
+  background: #040810;
+  color: white;
+  border: none;
+}
+
+.widget-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.health-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.health-value {
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.health-delta {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.widget-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.progress-bar-v2 {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+}
+
+.progress-fill-v2 {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 100px;
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.insights-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.insights-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.insights-list li {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  padding-left: 12px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.insights-list li strong {
+  color: #0f172a;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.btn-deep-dive {
+  width: 100%;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-deep-dive:hover { background: #f1f5f9; }

@@ -1,3 +1,5 @@
+import "../../styles/dashboard-visualizer.css";
+
 const RECEIVABLES = [
   { name: "Reliance Industries", days: 82, amount: "18L", label: "NET 82" },
   { name: "Tata Consultancy", days: 67, amount: "9.4L", label: "NET 67" },

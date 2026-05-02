@@ -1,0 +1,21 @@
+/* Promo Grid */
+.promo-grid-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.promo-card { padding: 32px; border-radius: 20px; border: 1px solid #e2e8f0; }
+.promo-card.dark { background: #040810; color: white; border: none; }
+.promo-card h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+.promo-card p { font-size: 15px; line-height: 1.6; opacity: 0.7; margin-bottom: 24px; }
+.promo-card.light { background: white; }
+
+.insight-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.insight-icon { width: 32px; height: 32px; background: rgba(0, 212, 168, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); }
+
+.promo-actions { display: flex; gap: 24px; }
+.text-link { background: transparent; border: none; font-size: 14px; font-weight: 700; color: var(--primary); cursor: pointer; }
+.text-link.muted { color: #94a3b8; }
+
+.btn-primary-v2 { padding: 12px 24px; background: var(--primary); color: #040810; border: none; border-radius: 100px; font-weight: 800; font-size: 14px; cursor: pointer; }

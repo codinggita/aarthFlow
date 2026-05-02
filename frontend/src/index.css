@@ -1,5 +1,6 @@
 /* Global Reset & Theme Integration */
 @import "./styles/tokens.css";
+@import "./styles/responsive.css";
 
 * {
   box-sizing: border-box;

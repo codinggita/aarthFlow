@@ -1,0 +1,48 @@
+.invoice-body { max-width: 1400px; }
+
+.invoice-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.upload-section {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 32px;
+}
+
+.upload-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+.sub-text { color: #64748b; font-size: 16px; margin-bottom: 32px; }
+
+.drop-zone {
+  border: 2px dashed #e2e8f0;
+  border-radius: 16px;
+  padding: 48px;
+  text-align: center;
+  background: #f8fafc;
+  margin-bottom: 32px;
+  transition: all 0.2s;
+}
+
+.drop-zone:hover { border-color: var(--primary); background: #f0fdfa; }
+.drop-icon { font-size: 32px; color: var(--primary); margin-bottom: 16px; }
+.drop-zone .small { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+
+.btn-browse {
+  margin-top: 24px;
+  padding: 10px 24px;
+  background: #040810;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.form-grid-v2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.form-group-v2 label { display: block; font-size: 11px; font-weight: 800; color: #94a3b8; letter-spacing: 1px; margin-bottom: 12px; }
+.input-v2 { width: 100%; padding: 14px 16px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 15px; background: #f8fafc; outline: none; }

@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getMe, loginUser, registerUser, verifyOTP, sendOTP } from "../utils/api";
 
 const AuthContext = createContext();
 
@@ -8,77 +7,54 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Check if user is already logged in on app load
   useEffect(() => {
+    // Check for mock token
     const token = localStorage.getItem("token");
     if (token) {
-      getMe()
-        .then((data) => setUser(data.user))
-        .catch(() => localStorage.removeItem("token"))
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+      setUser({
+        ownerName: "Alex Rivera",
+        businessName: "AarthFlow Institutional",
+        email: "alex@aarthflow.com"
+      });
     }
+    setLoading(false);
   }, []);
 
-  // Email + password login
   const login = async (email, password) => {
-    setError(null);
-    try {
-      const data = await loginUser({ email, password });
-      localStorage.setItem("token", data.token);
-      setUser(data.user);
-      return { success: true };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, message: err.message };
-    }
+    localStorage.setItem("token", "mock-token");
+    setUser({
+      ownerName: "Alex Rivera",
+      businessName: "AarthFlow Institutional",
+      email: email || "alex@aarthflow.com"
+    });
+    return { success: true };
   };
 
-  // OTP login — step 1: send OTP
-  const sendLoginOTP = async (mobile) => {
-    setError(null);
-    try {
-      const data = await sendOTP(mobile);
-      return { success: true, message: data.message };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, message: err.message };
-    }
-  };
-
-  // OTP login — step 2: verify OTP
-  const verifyLoginOTP = async (mobile, otp) => {
-    setError(null);
-    try {
-      const data = await verifyOTP(mobile, otp);
-      localStorage.setItem("token", data.token);
-      setUser(data.user);
-      return { success: true };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, message: err.message };
-    }
-  };
-
-  // Register new user
   const register = async (formData) => {
-    setError(null);
-    try {
-      const data = await registerUser(formData);
-      localStorage.setItem("token", data.token);
-      setUser(data.user);
-      return { success: true };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, message: err.message };
-    }
+    localStorage.setItem("token", "mock-token");
+    setUser({
+      ownerName: formData.ownerName || "New User",
+      businessName: formData.businessName || "New Enterprise",
+      email: formData.email
+    });
+    return { success: true };
   };
 
-  // Logout
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+  };
+
+  // Mock functions for OTP
+  const sendLoginOTP = async (mobile) => ({ success: true, message: "OTP Sent" });
+  const verifyLoginOTP = async (mobile, otp) => {
+    localStorage.setItem("token", "mock-token");
+    setUser({
+      ownerName: "Alex Rivera",
+      businessName: "AarthFlow Institutional",
+      mobile: mobile
+    });
+    return { success: true };
   };
 
   return (
@@ -88,10 +64,10 @@ export const AuthProvider = ({ children }) => {
         loading,
         error,
         login,
-        sendLoginOTP,
-        verifyLoginOTP,
         register,
         logout,
+        sendLoginOTP,
+        verifyLoginOTP,
         isLoggedIn: !!user,
       }}
     >

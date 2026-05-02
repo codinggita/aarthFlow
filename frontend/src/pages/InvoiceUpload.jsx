@@ -1,333 +1,227 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { createInvoice, getBuyers } from "../utils/api";
-import "../styles/Invoice.css";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../styles/dashboard-layout.css";
+import "../styles/invoice-upload.css";
 
-const ADVANCE_OPTIONS = [
-  { percent: 80, fee: 1.5 },
-  { percent: 90, fee: 2.0 },
-  { percent: 100, fee: 2.8 },
-];
+const SidebarItem = ({ to, icon, label, active }) => (
+  <Link to={to} className={`side-nav-item ${active ? 'active' : ''}`}>
+    <span className="nav-icon">{icon}</span>
+    <span className="nav-label">{label}</span>
+  </Link>
+);
 
 const InvoiceUpload = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const [buyers, setBuyers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [formError, setFormError] = useState("");
-  const [selectedAdvance, setSelectedAdvance] = useState(90);
-  const [fileName, setFileName] = useState("");
-
-  const [formData, setFormData] = useState({
-    invoiceNumber: "",
-    buyerName: "",
-    buyerGST: "",
-    invoiceAmount: "",
-    invoiceDate: "",
-    dueDate: "",
-  });
-
-  useEffect(() => {
-    getBuyers()
-      .then((res) => setBuyers(res.buyers))
-      .catch(() => setBuyers([]));
-  }, []);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setFormError("");
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) setFileName(file.name);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file) setFileName(file.name);
-  };
-
-  const calculateBreakdown = () => {
-    const amount = parseFloat(formData.invoiceAmount) || 0;
-    const option = ADVANCE_OPTIONS.find(
-      (o) => o.percent === selectedAdvance
-    );
-    const advanceAmount = (amount * option.percent) / 100;
-    const feeAmount = (advanceAmount * option.fee) / 100;
-    const netPayout = advanceAmount - feeAmount;
-    return { advanceAmount, feeAmount, netPayout, feePercent: option.fee };
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormError("");
-
-    const {
-      invoiceNumber, buyerName,
-      invoiceAmount, invoiceDate, dueDate,
-    } = formData;
-
-    if (!invoiceNumber || !buyerName || !invoiceAmount || !invoiceDate || !dueDate) {
-      return setFormError("All fields are required");
-    }
-
-    if (parseFloat(invoiceAmount) <= 0) {
-      return setFormError("Invoice amount must be greater than 0");
-    }
-
-    if (new Date(dueDate) <= new Date(invoiceDate)) {
-      return setFormError("Due date must be after invoice date");
-    }
-
-    setLoading(true);
-    try {
-      const res = await createInvoice({
-        ...formData,
-        invoiceAmount: parseFloat(formData.invoiceAmount),
-        advancePercent: selectedAdvance,
-      });
-      navigate(`/invoices/${res.invoice._id}`);
-    } catch (err) {
-      setFormError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const { advanceAmount, feeAmount, netPayout, feePercent } =
-    calculateBreakdown();
+  const stats = [
+    { label: "AVAILABLE CREDIT", value: "₹12.4M", sub: "65% of your ₹20M limit utilized.", type: "light" },
+    { label: "AVERAGE DISBURSAL", value: "4.2s", sub: "Institutional speed enabled.", type: "dark" },
+    { label: "ACTIVE INVOICES", value: "24", sub: "4 pending verification.", type: "light" },
+  ];
 
   return (
-    <div className="invoice-upload-page">
-      {/* Header */}
-      <div className="page-header">
-        <button className="back-btn" onClick={() => navigate("/dashboard")}>
-          ← Dashboard
-        </button>
-        <h1>Upload New Invoice</h1>
-      </div>
-
-      <div className="upload-layout">
-        {/* Left — Form */}
-        <div className="upload-form-card">
-          {formError && <p className="form-error">{formError}</p>}
-
-          {/* File Drop Zone */}
-          <div
-            className={`drop-zone ${fileName ? "has-file" : ""}`}
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            {fileName ? (
-              <div className="file-preview">
-                <span className="file-icon">📄</span>
-                <span className="file-name">{fileName}</span>
-                <span
-                  className="file-remove"
-                  onClick={() => setFileName("")}
-                >
-                  ×
-                </span>
-              </div>
-            ) : (
-              <>
-                <span className="drop-icon">☁️</span>
-                <p>Drop your GST invoice PDF here</p>
-                <label className="browse-label">
-                  or <span>Browse Files</span>
-                  <input
-                    type="file"
-                    accept=".pdf,.jpg,.png"
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                </label>
-                <p className="drop-hint">PDF, JPG, PNG · Max 10MB</p>
-              </>
-            )}
+    <div className="dash-container-v2">
+      {/* SIDEBAR */}
+      <aside className="sidebar-v2">
+        <div className="sidebar-brand">
+          <div className="brand-logo">AarthFlow</div>
+          <p className="brand-sub">INSTITUTIONAL FINANCE</p>
+        </div>
+        <nav className="sidebar-nav">
+          <SidebarItem to="/dashboard" icon="📊" label="Dashboard" />
+          <SidebarItem to="/invoices" icon="📄" label="Invoices" active />
+          <SidebarItem to="/financing" icon="🏛️" label="Financing" />
+          <SidebarItem to="/customers" icon="👥" label="Customers" />
+          <SidebarItem to="/reports" icon="📈" label="Reports" />
+          <SidebarItem to="/settings" icon="⚙️" label="Settings" />
+        </nav>
+        <div className="sidebar-footer">
+          <div className="sidebar-links-bottom">
+            <Link to="/support">❓ Support</Link>
+            <Link to="/docs">📖 Documentation</Link>
           </div>
+          <div className="update-badge">
+            <span className="update-dot"></span>
+            <strong>NEW UPDATE</strong>
+            <p>Institutional trade tracking is now live in the reporting tab.</p>
+            <span>May 12, 10:30 AM</span>
+          </div>
+        </div>
+      </aside>
 
-          <form onSubmit={handleSubmit} className="invoice-form">
-            {/* Buyer Select */}
-            <div className="form-group">
-              <label>Buyer Name</label>
-              {buyers.length > 0 ? (
-                <select
-                  name="buyerName"
-                  value={formData.buyerName}
-                  onChange={handleChange}
-                >
-                  <option value="">Select buyer</option>
-                  {buyers.map((b) => (
-                    <option key={b._id} value={b.name}>
-                      {b.name}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  type="text"
-                  name="buyerName"
-                  placeholder="Enter buyer name"
-                  value={formData.buyerName}
-                  onChange={handleChange}
-                />
-              )}
-            </div>
+      {/* MAIN CONTENT */}
+      <div className="main-viewport">
+        <header className="top-bar-v2">
+          <div className="search-wrap">
+            <span className="search-icon">🔍</span>
+            <input type="text" placeholder="Search transactions..." />
+          </div>
+          <div className="top-bar-actions">
+            <button className="icon-btn">🔔</button>
+            <button className="icon-btn" onClick={() => navigate("/settings")}>⚙️</button>
+            <div className="user-avatar-v2" onClick={() => navigate("/settings")} style={{ cursor: 'pointer' }}>{user?.ownerName?.charAt(0) || "A"}</div>
+          </div>
+        </header>
 
-            <div className="form-group">
-              <label>Buyer GST (optional)</label>
-              <input
-                type="text"
-                name="buyerGST"
-                placeholder="Buyer GSTIN"
-                maxLength={15}
-                value={formData.buyerGST}
-                onChange={handleChange}
-              />
-            </div>
+        <div className="content-body invoice-body">
+          <div className="invoice-main-layout">
+            <div className="invoice-primary-col">
+              <section className="upload-section">
+                <h2>New Invoice</h2>
+                <p className="sub-text">Accelerate your cash flow by uploading your commercial invoices.</p>
+                
+                <div className="drop-zone">
+                  <div className="drop-icon">☁️</div>
+                  <p><strong>Drag and drop files here</strong></p>
+                  <p className="small">PDF, JPG or PNG up to 20MB</p>
+                  <button className="btn-browse">Browse Files</button>
+                </div>
 
-            <div className="form-row">
-              <div className="form-group">
-                <label>Invoice Number</label>
-                <input
-                  type="text"
-                  name="invoiceNumber"
-                  placeholder="e.g. INV-2024-001"
-                  value={formData.invoiceNumber}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label>Invoice Amount (₹)</label>
-                <input
-                  type="number"
-                  name="invoiceAmount"
-                  placeholder="e.g. 485000"
-                  min="1"
-                  value={formData.invoiceAmount}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>Invoice Date</label>
-                <input
-                  type="date"
-                  name="invoiceDate"
-                  value={formData.invoiceDate}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label>Due Date</label>
-                <input
-                  type="date"
-                  name="dueDate"
-                  value={formData.dueDate}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            {/* Advance Options */}
-            <div className="form-group">
-              <label>Choose Advance %</label>
-              <div className="advance-options">
-                {ADVANCE_OPTIONS.map((opt) => (
-                  <div
-                    key={opt.percent}
-                    className={`advance-card ${
-                      selectedAdvance === opt.percent ? "selected" : ""
-                    }`}
-                    onClick={() => setSelectedAdvance(opt.percent)}
-                  >
-                    <p className="advance-percent">{opt.percent}% Advance</p>
-                    <p className="advance-fee">Fee: {opt.fee}%</p>
-                    {formData.invoiceAmount && (
-                      <p className="advance-net">
-                        Net: ₹
-                        {(
-                          (parseFloat(formData.invoiceAmount) *
-                            opt.percent) /
-                            100 -
-                          (((parseFloat(formData.invoiceAmount) *
-                            opt.percent) /
-                            100) *
-                            opt.fee) /
-                            100
-                        ).toLocaleString("en-IN")}
-                      </p>
-                    )}
+                <div className="form-grid-v2">
+                  <div className="form-group-v2">
+                    <label>CUSTOMER NAME</label>
+                    <select className="input-v2">
+                      <option>Select Customer</option>
+                      <option>Reliance Industries</option>
+                      <option>Tata Motors</option>
+                    </select>
                   </div>
-                ))}
-              </div>
+                  <div className="form-group-v2">
+                    <label>DUE DATE</label>
+                    <input type="date" className="input-v2" defaultValue="2024-05-12" />
+                  </div>
+                </div>
+              </section>
+
+              <section className="lifecycle-section">
+                <div className="section-header-row">
+                  <h3>Invoice Lifecycle</h3>
+                  <div className="header-actions">
+                    <button className="btn-ghost">Download PDF</button>
+                    <button className="btn-dark">View Ledger</button>
+                  </div>
+                </div>
+
+                <div className="lifecycle-stepper">
+                  <div className="step-node active">
+                    <div className="node-icon">🛡️</div>
+                    <div className="node-info">
+                      <strong>Verified</strong>
+                      <span>May 12, 11:45 AM</span>
+                    </div>
+                  </div>
+                  <div className="step-line active"></div>
+                  <div className="step-node active">
+                    <div className="node-icon">🏛️</div>
+                    <div className="node-info">
+                      <strong>Financing Active</strong>
+                      <span className="status-badge">CURRENT STATUS</span>
+                    </div>
+                  </div>
+                  <div className="step-line"></div>
+                  <div className="step-node disabled">
+                    <div className="node-icon">📄</div>
+                    <div className="node-info">
+                      <strong>Repayment Due</strong>
+                      <span>Est. June 12</span>
+                    </div>
+                  </div>
+                  <div className="step-line"></div>
+                  <div className="step-node disabled">
+                    <div className="node-icon">✓</div>
+                    <div className="node-info">
+                      <strong>Closed</strong>
+                      <span>--</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
 
-            {/* Breakdown */}
-            {formData.invoiceAmount && (
-              <div className="breakdown-card">
-                <div className="breakdown-row">
-                  <span>Invoice Amount</span>
-                  <span>
-                    ₹
-                    {parseFloat(
-                      formData.invoiceAmount
-                    ).toLocaleString("en-IN")}
-                  </span>
+            <aside className="invoice-summary-sidebar">
+              <div className="summary-card">
+                <h3>Financing Summary</h3>
+                <div className="summary-list">
+                  <div className="summary-row">
+                    <span>Invoice Value</span>
+                    <span className="val">₹50,000.00</span>
+                  </div>
+                  <div className="summary-row">
+                    <span>Advance Rate (90%)</span>
+                    <span className="val">₹45,000.00</span>
+                  </div>
+                  <div className="summary-row tech-fee">
+                    <span>Est. Service Fee</span>
+                    <span className="val-red">- ₹2,000.00</span>
+                  </div>
                 </div>
-                <div className="breakdown-row">
-                  <span>Advance ({selectedAdvance}%)</span>
-                  <span>₹{advanceAmount.toLocaleString("en-IN")}</span>
+                <div className="summary-total">
+                  <span className="total-label">ESTIMATED PAYOUT</span>
+                  <h2 className="total-val">₹43,000.00</h2>
                 </div>
-                <div className="breakdown-row fee">
-                  <span>AarthFlow Fee ({feePercent}%)</span>
-                  <span>− ₹{feeAmount.toLocaleString("en-IN")}</span>
-                </div>
-                <div className="breakdown-row net">
-                  <span>You Receive</span>
-                  <span>₹{netPayout.toLocaleString("en-IN")}</span>
-                </div>
+                <button className="btn-submit-verification" onClick={() => setShowSuccess(true)}>
+                  Submit for Verification
+                </button>
+                <p className="summary-legal">Subject to credit assessment and institutional verification guidelines.</p>
               </div>
-            )}
+            </aside>
+          </div>
 
-            <button
-              type="submit"
-              className="btn-primary full-width"
-              disabled={loading}
-            >
-              {loading ? "Submitting..." : "Submit for Early Payment →"}
-            </button>
-            <p className="submit-note">
-              Buyer will be auto-notified. Typical confirmation: 4-8 hours.
-            </p>
-          </form>
-        </div>
-
-        {/* Right — Info Panel */}
-        <div className="upload-info-panel">
-          <h3>How it works</h3>
-          <div className="info-step">
-            <span className="info-num">1</span>
-            <p>Upload your GST invoice and select the buyer</p>
-          </div>
-          <div className="info-step">
-            <span className="info-num">2</span>
-            <p>Buyer gets notified and confirms invoice validity</p>
-          </div>
-          <div className="info-step">
-            <span className="info-num">3</span>
-            <p>Funds hit your bank account within 24 hours</p>
-          </div>
-          <div className="info-tip">
-            💡 Typical cost: 1.5–2.5% flat vs 4–5% monthly bank loan
+          <div className="bottom-stats-grid">
+            {stats.map((s, i) => (
+              <div key={i} className={`stat-box ${s.type}`}>
+                {s.type === 'dark' && <div className="stat-icon-glow">⚡</div>}
+                <div className="stat-content">
+                  <span className="stat-label">{s.label}</span>
+                  <h3 className="stat-value">{s.value}</h3>
+                  <p className="stat-sub">{s.sub}</p>
+                </div>
+                {s.label === 'ACTIVE INVOICES' && <div className="stat-bg-icon">📄</div>}
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* SUCCESS MODAL */}
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-modal">
+            <div className="success-check">
+              <div className="check-icon">✓</div>
+            </div>
+            <div className="success-content">
+              <span className="diamond">🔶</span>
+              <h2>Payout Successful</h2>
+              <p>Funds have been dispatched to your primary institutional node.</p>
+              
+              <div className="amount-card">
+                <span className="amount-label">TRANSFERRED AMOUNT</span>
+                <h2 className="amount-val">₹48,000.00</h2>
+              </div>
+
+              <div className="success-details">
+                <div className="detail-row">
+                  <span>Transaction ID</span>
+                  <strong>AF-TXN-882910</strong>
+                </div>
+                <div className="detail-row">
+                  <span>Destination</span>
+                  <strong>HDFC Bank •••• 4920</strong>
+                </div>
+              </div>
+
+              <button className="btn-back-dash" onClick={() => navigate("/dashboard")}>
+                Go to Dashboard
+              </button>
+              <button className="btn-link-receipt">Download Receipt</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

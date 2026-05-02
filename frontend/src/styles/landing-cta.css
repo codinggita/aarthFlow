@@ -1,0 +1,58 @@
+/* Split CTA Section */
+.split-cta-section {
+  padding: 100px 24px;
+  background: #f8fafc;
+}
+
+.split-cta-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #040810;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+}
+
+.split-cta-content {
+  flex: 1;
+  padding: 80px;
+  color: white;
+}
+
+.split-cta-content h2 {
+  font-size: 48px;
+  line-height: 1.1;
+  margin-bottom: 32px;
+}
+
+.split-cta-content p {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 48px;
+}
+
+.split-cta-visual {
+  flex: 1;
+  background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200') center/cover no-repeat;
+  min-height: 500px;
+}
+
+.cta-btns {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.talk-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .split-cta-inner { flex-direction: column; }
+  .split-cta-content { padding: 40px; }
+}

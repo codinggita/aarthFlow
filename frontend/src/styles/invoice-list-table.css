@@ -1,0 +1,42 @@
+/* List Table */
+.table-wrapper-v2 {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.table-controls-v2 {
+  padding: 0 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.table-tabs { display: flex; gap: 24px; height: 100%; }
+.tab-btn { background: transparent; border: none; font-size: 14px; font-weight: 700; color: #94a3b8; cursor: pointer; height: 100%; padding: 0 4px; position: relative; }
+.tab-btn.active { color: var(--primary); }
+.tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--primary); border-radius: 3px 3px 0 0; }
+
+.table-search input { padding: 8px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; background: #f8fafc; width: 240px; }
+.invoices-list-table { width: 100%; border-collapse: collapse; }
+.invoices-list-table th { text-align: left; padding: 16px 24px; font-size: 11px; font-weight: 800; color: #94a3b8; letter-spacing: 1px; background: #f8fafc; }
+.invoices-list-table td { padding: 20px 24px; border-bottom: 1px solid #f1f5f9; font-size: 14px; cursor: pointer; }
+.invoices-list-table tr:hover { background: #f8fafc; }
+
+.client-cell { display: flex; align-items: center; gap: 14px; }
+.client-avatar { width: 36px; height: 36px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #64748b; }
+.client-info strong { display: block; font-size: 14px; color: #0f172a; }
+.client-info span { font-size: 12px; color: #94a3b8; }
+
+.mono-cell { font-family: var(--font-mono); color: #64748b; font-size: 13px; }
+.bold-cell { font-weight: 700; color: #0f172a; }
+.payout-cell { font-weight: 700; color: var(--primary); }
+
+.table-footer-v2 { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
+.pagination { display: flex; gap: 4px; }
+.pg-btn { width: 32px; height: 32px; border: 1px solid #e2e8f0; background: white; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.pg-btn.active { background: var(--primary); border-color: var(--primary); color: #040810; }

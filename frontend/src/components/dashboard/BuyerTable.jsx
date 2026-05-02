@@ -1,3 +1,5 @@
+import "../../styles/dashboard-table.css";
+
 const BUYERS = [
   {
     name: "Reliance Industries",

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Login.css";
 
 const Login = () => {
-  const { login, sendLoginOTP, verifyLoginOTP, error } = useAuth();
+  const { login, verifyLoginOTP, sendLoginOTP } = useAuth();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("otp");
@@ -18,172 +18,155 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Handle send OTP
   const handleSendOTP = async (e) => {
     e.preventDefault();
     setFormError("");
-    if (!mobile || mobile.length !== 10) {
-      return setFormError("Enter a valid 10-digit mobile number");
-    }
+    if (!mobile || mobile.length !== 10) return setFormError("Enter a valid 10-digit mobile number");
+    
     setLoading(true);
-    const result = await sendLoginOTP(mobile);
+    await sendLoginOTP(mobile);
     setLoading(false);
-    if (result.success) {
-      setOtpStep(2);
-      setSuccessMsg("OTP sent successfully");
-    } else {
-      setFormError(result.message);
-    }
+    setOtpStep(2);
+    setSuccessMsg("OTP sent successfully to +91 " + mobile);
   };
 
-  // Handle verify OTP
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     setFormError("");
-    if (!otp || otp.length !== 6) {
-      return setFormError("Enter the 6-digit OTP");
-    }
+    if (!otp || otp.length !== 6) return setFormError("Enter the 6-digit OTP");
+    
     setLoading(true);
     const result = await verifyLoginOTP(mobile, otp);
     setLoading(false);
-    if (result.success) {
-      navigate("/dashboard");
-    } else {
-      setFormError(result.message);
-    }
+    if (result.success) navigate("/dashboard");
   };
 
-  // Handle email login
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setFormError("");
-    if (!email || !password) {
-      return setFormError("Email and password are required");
-    }
+    if (!email || !password) return setFormError("Email and password are required");
+    
     setLoading(true);
     const result = await login(email, password);
     setLoading(false);
-    if (result.success) {
-      navigate("/dashboard");
-    } else {
-      setFormError(result.message);
-    }
+    if (result.success) navigate("/dashboard");
   };
 
   return (
-    <div className="login-page">
-      {/* Left Panel */}
-      <div className="login-left">
-        <div className="login-logo">AarthFlow</div>
-        <div className="login-illustration">
-          <div className="flow-node">📄 Invoice Uploaded</div>
-          <div className="flow-line">↓</div>
-          <div className="flow-node">✅ Buyer Confirmed</div>
-          <div className="flow-line">↓</div>
-          <div className="flow-node active">₹ Funds Released</div>
+    <div className="auth-container">
+      <div className="auth-side-panel">
+        <Link to="/" className="auth-logo">AarthFlow</Link>
+        <div className="auth-visual">
+          <div className="glow-sphere"></div>
+          <div className="auth-content-wrap">
+            <h1>Unlock capital <br />in 24 hours.</h1>
+            <p>Join 2,400+ businesses using AarthFlow to bridge their working capital gap with institutional-grade financing.</p>
+          </div>
+          <div className="auth-badge">
+            <span className="badge-dot"></span> RBI REGULATED NODE ONLINE
+          </div>
         </div>
-        <p className="login-tagline">
-          2,400+ SMEs getting paid faster
-        </p>
       </div>
 
-      {/* Right Panel */}
-      <div className="login-right">
-        <h2 className="login-title">Welcome back</h2>
-        <p className="login-subtitle">Access your AarthFlow dashboard</p>
+      <div className="auth-form-panel">
+        <div className="auth-form-card">
+          <header className="auth-header">
+            <h2>Welcome back</h2>
+            <p>Enter your details to access your dashboard</p>
+          </header>
 
-        {/* Tab Toggle */}
-        <div className="login-tabs">
-          <button
-            className={activeTab === "otp" ? "tab active" : "tab"}
-            onClick={() => { setActiveTab("otp"); setFormError(""); }}
-          >
-            Mobile OTP
-          </button>
-          <button
-            className={activeTab === "email" ? "tab active" : "tab"}
-            onClick={() => { setActiveTab("email"); setFormError(""); }}
-          >
-            Email & Password
-          </button>
-        </div>
-
-        {/* Error / Success messages */}
-        {formError && <p className="form-error">{formError}</p>}
-        {successMsg && <p className="form-success">{successMsg}</p>}
-
-        {/* OTP Tab */}
-        {activeTab === "otp" && (
-          <>
-            {otpStep === 1 ? (
-              <form onSubmit={handleSendOTP} className="login-form">
-                <div className="input-group">
-                  <span className="input-prefix">+91</span>
-                  <input
-                    type="tel"
-                    placeholder="Mobile number"
-                    maxLength={10}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                  />
-                </div>
-                <button type="submit" className="btn-primary" disabled={loading}>
-                  {loading ? "Sending..." : "Send OTP →"}
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyOTP} className="login-form">
-                <p className="otp-hint">Sent to +91 {mobile}</p>
-                <input
-                  type="text"
-                  placeholder="Enter 6-digit OTP"
-                  maxLength={6}
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  className="otp-input"
-                />
-                <button type="submit" className="btn-primary" disabled={loading}>
-                  {loading ? "Verifying..." : "Verify & Login →"}
-                </button>
-                <button
-                  type="button"
-                  className="btn-ghost"
-                  onClick={() => { setOtpStep(1); setOtp(""); }}
-                >
-                  ← Change number
-                </button>
-              </form>
-            )}
-          </>
-        )}
-
-        {/* Email Tab */}
-        {activeTab === "email" && (
-          <form onSubmit={handleEmailLogin} className="login-form">
-            <input
-              type="email"
-              placeholder="Business email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? "Logging in..." : "Login →"}
+          <div className="auth-tabs">
+            <button 
+              className={`auth-tab ${activeTab === 'otp' ? 'active' : ''}`}
+              onClick={() => { setActiveTab('otp'); setFormError(''); setSuccessMsg(''); }}
+            >
+              Mobile OTP
             </button>
-          </form>
-        )}
+            <button 
+              className={`auth-tab ${activeTab === 'email' ? 'active' : ''}`}
+              onClick={() => { setActiveTab('email'); setFormError(''); setSuccessMsg(''); }}
+            >
+              Email Login
+            </button>
+          </div>
 
-        <p className="login-footer">
-          New to AarthFlow?{" "}
-          <span onClick={() => navigate("/signup")} className="link">
-            Create account →
-          </span>
-        </p>
+          {formError && <div className="auth-alert error">{formError}</div>}
+          {successMsg && <div className="auth-alert success">{successMsg}</div>}
+
+          {activeTab === "otp" ? (
+            <div className="auth-step-wrap">
+              {otpStep === 1 ? (
+                <form onSubmit={handleSendOTP} className="auth-form">
+                  <div className="form-group">
+                    <label>Mobile Number</label>
+                    <div className="input-with-prefix">
+                      <span className="prefix">+91</span>
+                      <input
+                        type="tel"
+                        placeholder="98765 43210"
+                        maxLength={10}
+                        value={mobile}
+                        onChange={(e) => setMobile(e.target.value)}
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+                  <button type="submit" className="auth-btn-primary" disabled={loading}>
+                    {loading ? "Sending..." : "Continue"}
+                  </button>
+                </form>
+              ) : (
+                <form onSubmit={handleVerifyOTP} className="auth-form">
+                  <div className="form-group">
+                    <label>Enter 6-digit OTP</label>
+                    <input
+                      type="text"
+                      placeholder="000000"
+                      maxLength={6}
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      className="otp-input-field"
+                      autoFocus
+                    />
+                    <p className="helper-text">Sent to +91 {mobile} <span onClick={() => setOtpStep(1)} className="text-link">Change</span></p>
+                  </div>
+                  <button type="submit" className="auth-btn-primary" disabled={loading}>
+                    {loading ? "Verifying..." : "Access Dashboard"}
+                  </button>
+                </form>
+              )}
+            </div>
+          ) : (
+            <form onSubmit={handleEmailLogin} className="auth-form">
+              <div className="form-group">
+                <label>Business Email</label>
+                <input
+                  type="email"
+                  placeholder="name@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoFocus
+                />
+              </div>
+              <div className="form-group">
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <button type="submit" className="auth-btn-primary" disabled={loading}>
+                {loading ? "Authenticating..." : "Login"}
+              </button>
+            </form>
+          )}
+
+          <footer className="auth-footer">
+            <p>New to AarthFlow? <Link to="/signup" className="text-link">Create an account</Link></p>
+          </footer>
+        </div>
       </div>
     </div>
   );

@@ -1,218 +1,121 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import {
-  getDashboardStats,
-  getRecentInvoices,
-  getDashboardSummary,
-} from "../utils/api";
-import KPICards from "../components/KPICards";
-import RecentInvoices from "../components/RecentInvoices";
-import "../styles/Dashboard.css";
+import { Link } from "react-router-dom";
+import DashboardLayout from "../components/DashboardLayout";
+import KPICard from "../components/dashboard/KPICard";
+import "../styles/dashboard-kpi.css";
+import "../styles/dashboard-table.css";
+import "../styles/dashboard-widgets.css";
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const [stats, setStats] = useState(null);
-  const [recentInvoices, setRecentInvoices] = useState([]);
-  const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      setLoading(true);
-      setError("");
-      try {
-        const [statsRes, invoicesRes, summaryRes] = await Promise.all([
-          getDashboardStats(),
-          getRecentInvoices(),
-          getDashboardSummary(),
-        ]);
-        setStats(statsRes.stats);
-        setRecentInvoices(invoicesRes.invoices);
-        setSummary(summaryRes.summary);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDashboardData();
+    setTimeout(() => setLoading(false), 800);
   }, []);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
   if (loading) {
     return (
       <div className="dashboard-loading">
-        <div className="spinner"></div>
-        <p>Loading your dashboard...</p>
+        <div className="spinner-v2"></div>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="dashboard-error">
-        <p>⚠️ {error}</p>
-        <button onClick={() => window.location.reload()}>Retry</button>
-      </div>
-    );
-  }
+  const invoices = [
+    { id: 'INV-84920', client: 'TechSystems Inc.', amount: '₹42,500.00', status: 'Funded', initial: 'TS' },
+    { id: 'INV-84921', client: 'Global Media Co.', amount: '₹12,400.00', status: 'Review', initial: 'GM' },
+    { id: 'INV-84922', client: 'Apex Ventures', amount: '₹158,000.00', status: 'Pending', initial: 'AV' },
+    { id: 'INV-84923', client: 'Lunar Logistics', amount: '₹8,250.00', status: 'Funded', initial: 'LL' },
+    { id: 'INV-84924', client: 'Nexus Core', amount: '₹22,100.00', status: 'Delayed', initial: 'NC' },
+  ];
+
+  const headerActions = (
+    <>
+      <button className="btn-secondary">📅 Last 30 Days</button>
+      <button className="btn-secondary">📥 Export Report</button>
+    </>
+  );
 
   return (
-    <div className="dashboard-layout">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-top">
-          <div className="sidebar-logo">AarthFlow</div>
-          {user && (
-            <div className="sidebar-user">
-              <p className="sidebar-business">{user.businessName}</p>
-              <p className="sidebar-gst">GST: {user.gstNumber}</p>
-            </div>
-          )}
+    <DashboardLayout 
+      activePage="dashboard" 
+      pageTitle="Finance Overview" 
+      pageSubtitle="Institutional dashboard for real-time invoice liquidity monitoring."
+      headerActions={headerActions}
+    >
+      <div className="kpi-grid-v2">
+        <KPICard title="TOTAL FUNDED" value="₹4.28M" subtext="v.s last month ₹3.81M" badge="+1.2%" icon="💵" type="success" />
+        <KPICard title="PENDING VOLUME" value="₹842.0k" subtext="14 active applications" badge="IN REVIEW" icon="⏳" type="warning" />
+        <KPICard title="YIELD (APR)" value="1.2%" subtext="Average across portfolio" badge="HEALTHY" icon="📈" type="info" />
+        <KPICard title="EXPOSURE AT RISK" value="₹42.3k" subtext="3 past-due counterparties" badge="ATTENTION" icon="⚠️" type="danger" />
+      </div>
+
+      <div className="dashboard-main-grid">
+        <div className="table-container-v2">
+          <div className="table-header-v2">
+            <h3>Recent Invoices</h3>
+            <Link to="/invoices" className="view-all">View all invoices</Link>
+          </div>
+          <table className="invoices-table-v2">
+            <thead>
+              <tr>
+                <th>COUNTERPARTY</th>
+                <th>INVOICE #</th>
+                <th>AMOUNT</th>
+                <th>STATUS</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoices.map((inv) => (
+                <tr key={inv.id}>
+                  <td className="counterparty-cell">
+                    <div className="client-initial">{inv.initial}</div>
+                    <span>{inv.client}</span>
+                  </td>
+                  <td className="id-cell">{inv.id}</td>
+                  <td className="amount-cell">{inv.amount}</td>
+                  <td>
+                    <span className={`status-pill ${inv.status.toLowerCase()}`}>
+                      {inv.status}
+                    </span>
+                  </td>
+                  <td className="action-cell">
+                    <Link to={`/invoices/${inv.id}`}>View →</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        <nav className="sidebar-nav">
-          <div className="nav-label">MAIN</div>
-          <div className="nav-item active">🏠 Dashboard</div>
-          <div
-            className="nav-item"
-            onClick={() => navigate("/invoices")}
-          >
-            📄 My Invoices
-          </div>
-          <div
-            className="nav-item"
-            onClick={() => navigate("/invoices/upload")}
-          >
-            ⬆️ Upload Invoice
-          </div>
-          <div
-            className="nav-item"
-            onClick={() => navigate("/payouts")}
-          >
-            💰 Payouts
-          </div>
-          <div
-            className="nav-item"
-            onClick={() => navigate("/buyers")}
-          >
-            🏢 Buyers
-          </div>
-        </nav>
-
-        <div className="sidebar-bottom">
-          <div className="sidebar-profile">
-            <div className="avatar">
-              {user?.ownerName?.charAt(0).toUpperCase()}
+        <div className="widgets-column">
+          <div className="widget-card portfolio-health">
+            <p className="widget-label">PORTFOLIO HEALTH</p>
+            <div className="health-value-row">
+              <span className="health-value">98.2%</span>
+              <span className="health-delta">+0.4%</span>
             </div>
-            <div>
-              <p className="profile-name">{user?.ownerName}</p>
-              <p className="profile-role">Owner</p>
+            <p className="widget-sub">Your institutional liquidity ratio is currently exceeding target thresholds.</p>
+            <div className="progress-bar-v2">
+              <div className="progress-fill-v2" style={{ width: '98.2%' }}></div>
             </div>
           </div>
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      </aside>
 
-      {/* Main Content */}
-      <main className="dashboard-main">
-        {/* Top Bar */}
-        <div className="topbar">
-          <h1 className="page-title">Dashboard</h1>
-          <div className="topbar-right">
-            <button
-              className="btn-upload"
-              onClick={() => navigate("/invoices/upload")}
-            >
-              + Upload Invoice
-            </button>
+          <div className="widget-card insights-card">
+            <div className="insight-header">
+              <span className="insight-icon">📈</span>
+              <h4>Market Insights</h4>
+            </div>
+            <ul className="insights-list">
+              <li><strong>Yield Alert:</strong> SaaS receivables are currently trading at 4.2% premium above baseline.</li>
+              <li><strong>Action:</strong> Liquidity pool #44 is now open for direct institutional participation.</li>
+            </ul>
+            <button className="btn-deep-dive">Deep Dive Analysis</button>
           </div>
         </div>
-
-        {/* KPI Cards */}
-        {stats && <KPICards stats={stats} />}
-
-        {/* Middle Row */}
-        <div className="dashboard-middle">
-          {/* Recent Invoices */}
-          <div className="recent-invoices-wrap">
-            <RecentInvoices
-              invoices={recentInvoices}
-              onViewAll={() => navigate("/invoices")}
-            />
-          </div>
-
-          {/* Payout Summary */}
-          <div className="payout-summary-card">
-            <p className="card-label">SAVINGS THIS MONTH</p>
-            <h2 className="savings-amount">
-              ₹{summary?.totalSavings?.toLocaleString("en-IN") || 0}
-            </h2>
-            <p className="savings-sub">
-              vs taking a bank loan at 20% p.a.
-            </p>
-            <div className="summary-row">
-              <span>Total Advanced</span>
-              <span>
-                ₹{summary?.totalAdvanced?.toLocaleString("en-IN") || 0}
-              </span>
-            </div>
-            <div className="summary-row">
-              <span>Total Invoices</span>
-              <span>{summary?.totalInvoices || 0}</span>
-            </div>
-            <div className="status-breakdown">
-              {summary?.statusBreakdown &&
-                Object.entries(summary.statusBreakdown).map(
-                  ([status, count]) => (
-                    <div key={status} className="status-row">
-                      <span className={`status-dot ${status.toLowerCase().replace(" ", "-")}`}></span>
-                      <span>{status}</span>
-                      <span>{count}</span>
-                    </div>
-                  )
-                )}
-            </div>
-          </div>
-        </div>
-
-        {/* Savings Banner */}
-        {summary?.totalSavings > 0 && (
-          <div className="savings-banner">
-            <span className="banner-icon">💡</span>
-            <div>
-              <p className="banner-text">
-                AarthFlow saved you{" "}
-                <strong>
-                  ₹{summary.totalSavings.toLocaleString("en-IN")}
-                </strong>{" "}
-                in loan interest this month.
-              </p>
-              <p className="banner-sub">
-                At 20% p.a. bank rate vs AarthFlow advance fee.
-              </p>
-            </div>
-            <button
-              className="btn-primary"
-              onClick={() => navigate("/invoices/upload")}
-            >
-              Upload More Invoices
-            </button>
-          </div>
-        )}
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 };
 

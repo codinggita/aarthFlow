@@ -1,3 +1,4 @@
+/* --- LANDING PAGE RESPONSIVENESS --- */
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-right { display: none; }
@@ -16,4 +17,89 @@
   .pipeline-steps { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; }
   .hero-cta { flex-direction: column; }
+}
+
+/* --- DASHBOARD & INSTITUTIONAL RESPONSIVENESS --- */
+@media (max-width: 1024px) {
+  .kpi-grid-v2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .search-wrap {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-v2 {
+    width: 80px; /* Mini sidebar */
+    padding: 0;
+  }
+  
+  .brand-sub, .nav-label, .sidebar-links-bottom, .btn-new-invoice span {
+    display: none;
+  }
+  
+  .side-nav-item {
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .main-viewport {
+    margin-left: 80px;
+  }
+  
+  .top-bar-v2 {
+    padding: 0 20px;
+  }
+  
+  .search-wrap {
+    display: none; /* Hide search on small screens */
+  }
+  
+  .page-header-v2 {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .content-body {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-v2 {
+    display: none; /* Hide sidebar completely on very small screens */
+  }
+  
+  .main-viewport {
+    margin-left: 0;
+  }
+  
+  .kpi-grid-v2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .invoices-table-v2, .invoices-list-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .user-text {
+    display: none;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+  }
+  
+  .btn-secondary, .btn-primary-v2 {
+    width: 100%;
+    justify-content: center;
+  }
 }

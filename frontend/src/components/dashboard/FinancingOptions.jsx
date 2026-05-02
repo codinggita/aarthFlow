@@ -1,3 +1,5 @@
+import "../../styles/dashboard-financing.css";
+
 const OPTIONS = [
   {
     title: "Invoice Discounting",

@@ -1,0 +1,58 @@
+/* Sidebar Summary Card */
+.summary-card {
+  background: #040810;
+  color: white;
+  padding: 32px;
+  border-radius: 20px;
+  position: sticky;
+  top: 120px;
+}
+
+.summary-card h3 { font-size: 20px; margin-bottom: 32px; }
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.summary-row .val { color: white; font-weight: 700; }
+.summary-row.tech-fee { color: #f87171; }
+.val-red { color: #f87171; font-weight: 700; }
+
+.summary-total {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  margin-bottom: 32px;
+}
+
+.total-label { font-size: 11px; font-weight: 800; color: var(--primary); letter-spacing: 1px; }
+.total-val { font-size: 32px; font-weight: 800; margin-top: 8px; }
+
+.btn-submit-verification {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: #040810;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-submit-verification:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 212, 168, 0.3);
+}
+
+.summary-legal { font-size: 11px; color: rgba(255, 255, 255, 0.4); text-align: center; margin-top: 24px; line-height: 1.5; }
